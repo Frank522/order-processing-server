@@ -9,14 +9,11 @@ var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 
 const cors = require('cors');
-const fetch = require('node-fetch');
+
 app.use(cors({
     origin: '*'
 }));
-fetch('https://cse5234-order-microservice.herokuapp.com/', {
-  mode: 'cors',
-  credentials: 'include'
-})
+
 app.post('/*', jsonParser, async function (req, res) {
     console.log('Got body:', req.body);
     let cart = req.body.product;
