@@ -18,7 +18,7 @@ app.post('/*', jsonParser, async function (req, res) {
     console.log('Got body:', req.body);
     let cart = req.body.product;
 
-   http.get('http://cse5234.herokuapp.com/InventoryMicroservice/Inventory', response => {
+   http.get('https://cse5234-inventory-microservice.herokuapp.com/', response => {
         let data = [];
         const headerDate = res.headers && res.headers.date ? res.headers.date : 'no response date';
         console.log('Status Code:', res.statusCode);
