@@ -14,7 +14,7 @@ app.use(cors({
     origin: '*'
 }));
 
-app.post('/OrderMicroservice/Order', jsonParser, async function (req, res) {
+app.post('/*', jsonParser, async function (req, res) {
     console.log('Got body:', req.body);
     let cart = req.body.product;
 
