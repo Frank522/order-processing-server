@@ -44,7 +44,6 @@ async function insertShipping(request, response) {
       shipping.address,
       shipping.city,
       shipping.state,
-      shipping.name,
       shipping.zipcode,
       shipping.email,
       shipping.shipping_method,
