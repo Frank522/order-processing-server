@@ -165,7 +165,10 @@ async function updateInventory(request, result) {
   console.log("Got body:", request.body);
   http.post(
     "https://cse5234-inventory-microservice.herokuapp.com/InventoryMicroservice/Update",
-    async function (response) {}
+    async function (response) {
+        //TODO: for each plant update the inventory count, 
+        //create functionality in Inventory microservice to do that as well
+    }
   );
 }
 
