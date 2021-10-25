@@ -181,13 +181,12 @@ async function updateInventory(request, result) {
 
 app.post(
   "/OrderMicroservice/Order",
-  jsonParser,
-  checkInventory,
+  [checkInventory,
   insertShipping,
   insertPayment,
   insertOrder,
   insertPlants,
-  updateInventory
+  updateInventory]
 );
 
 var server = app.listen(port, function () {
