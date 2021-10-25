@@ -113,7 +113,7 @@ async function insertPlants(request, response) {
 }
 
 async function checkInventory(request, result) {
-  let cart = request.body.product;
+  let cart = request.body;
   console.log("Got body:", request.body);
   http
     .get(
