@@ -7,14 +7,35 @@ const port = process.env.PORT || 3002;
 var bodyParser = require('body-parser');
 // create application/json parser
 var jsonParser = bodyParser.json();
-
+const { Client } = require("pg");
 const cors = require('cors');
 
 app.use(cors({
     origin: '*'
 }));
-
-app.post('/*', jsonParser, async function (req, res) {
+const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+});
+client.connect();
+const info = (request, response) => {
+    console.log(request.body);
+    // const { author, title } = request.body
+  
+    // pool.query(
+    //   'INSERT INTO books (author, title) VALUES ($1, $2)',
+    //   [author, title],
+    //   (error) => {
+    //     if (error) {
+    //       throw error
+    //     }
+    //     response.status(201).json({ status: 'success', message: 'Book added.' })
+    //   }
+    // )
+}
+app.post('/OrderMicroservice/Order', jsonParser, async function (req, res) {
     console.log('Got body:', req.body);
     let cart = req.body.product;
 
