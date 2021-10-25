@@ -34,7 +34,9 @@ const OrderQuery = "INSERT INTO orders VALUES ($1, $2, $3, $4)";
 const PlantsQuery = "INSERT INTO plant_orders ($1, $2, $3, $4)";
 
 async function insertShipping(request, response) {
+
   let shipping = request.body.shipping;
+  console.log("Inserting Shipping\n");
   client.query(
     ShippingQuery,
     [
@@ -54,11 +56,12 @@ async function insertShipping(request, response) {
       client.end();
     }
   );
+  client.end();
 }
 
 async function insertPayment(request, response) {
   let payment = request.body.cart;
-
+  console.log("Inserting Payment\n");
   client.query(
     PaymentQuery,
     [
@@ -73,10 +76,12 @@ async function insertPayment(request, response) {
       client.end();
     }
   );
+  client.end();
 }
 
 async function insertOrder(request, response) {
   const date = new Date();
+  console.log("Inserting Order\n");
   client.query(
     OrderQuery,
     [
@@ -91,9 +96,11 @@ async function insertOrder(request, response) {
       client.end();
     }
   );
+  client.end();
 }
 
 async function insertPlants(request, response) {
+  console.log("Inserting Plants\n");
   for (item in request.body.product)
     client.query(
       PlantsQuery,
