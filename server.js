@@ -113,7 +113,7 @@ async function insertPlants(request, response) {
 }
 
 async function checkInventory(request, result) {
-  let cart = request.body;
+  let cart = request.body.product;
   console.log("Got body:", request.body);
   http
     .get(
@@ -181,12 +181,12 @@ async function updateInventory(request, result) {
 
 app.post(
   "/OrderMicroservice/Order",
-  [checkInventory,
+  checkInventory,
   insertShipping,
   insertPayment,
   insertOrder,
   insertPlants,
-  updateInventory]
+  updateInventory
 );
 
 var server = app.listen(port, function () {
