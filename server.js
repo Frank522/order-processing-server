@@ -112,7 +112,7 @@ async function insertPlants(request, response) {
   client.end();
 }
 
-async function checkInventory(request, result) {
+async function checkInventory(request, result, next) {
   let cart = request.body.product;
   console.log("Got body:", request.body);
   http
@@ -166,6 +166,7 @@ async function checkInventory(request, result) {
     .on("error", (err) => {
       console.log("Error: ", err.message);
     });
+    next();
 }
 
 async function updateInventory(request, result) {
