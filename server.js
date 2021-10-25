@@ -181,6 +181,7 @@ async function updateInventory(request, result) {
 
 app.post(
   "/OrderMicroservice/Order",
+  jsonParser,
   checkInventory,
   insertShipping,
   insertPayment,
