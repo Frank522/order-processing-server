@@ -56,7 +56,6 @@ async function insertShipping(request, response) {
       client.end();
     }
   );
-  client.end();
 }
 
 async function insertPayment(request, response) {
@@ -76,7 +75,6 @@ async function insertPayment(request, response) {
       client.end();
     }
   );
-  client.end();
 }
 
 async function insertOrder(request, response) {
@@ -96,12 +94,11 @@ async function insertOrder(request, response) {
       client.end();
     }
   );
-  client.end();
 }
 
 async function insertPlants(request, response) {
   console.log("Inserting Plants\n");
-  for (item in request.body.product)
+  for (item in request.body.product) {
     client.query(
       PlantsQuery,
       [request.body.id, item.id, item.quantity],
@@ -111,6 +108,8 @@ async function insertPlants(request, response) {
         client.end();
       }
     );
+  }
+  client.end();
 }
 
 async function checkInventory(request, result) {
