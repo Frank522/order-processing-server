@@ -121,8 +121,18 @@ async function checkInventory(request, result) {
         console.log("Status Code:", result.statusCode);
         console.log("Date in Response header:", headerDate);
 
+        response.setEncoding("utf8");
+        let rawData = "";
         response.on("data", (chunk) => {
-          data.push(chunk);
+          rawData += chunk;
+        });
+        response.on("end", () => {
+          try {
+            const inventory = JSON.parse(rawData);
+            console.log(parsedData);
+          } catch (e) {
+            console.error(e.message);
+          }
         });
 
         response.on("end", () => {
@@ -167,8 +177,8 @@ async function updateInventory(request, result) {
   http.post(
     "https://cse5234-inventory-microservice.herokuapp.com/InventoryMicroservice/Update",
     async function (response) {
-        //TODO: for each plant update the inventory count, 
-        //create functionality in Inventory microservice to do that as well
+      //TODO: for each plant update the inventory count,
+      //create functionality in Inventory microservice to do that as well
     }
   );
 }
