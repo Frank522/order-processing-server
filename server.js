@@ -40,7 +40,7 @@ async function insertShipping(request, response) {
   client.query(
     ShippingQuery,
     [
-      shipping.id,
+      Math.round(shipping.id),
       shipping.address,
       shipping.city,
       shipping.state,
@@ -64,7 +64,7 @@ async function insertPayment(request, response) {
   client.query(
     PaymentQuery,
     [
-      payment.id,
+      Math.round(payment.id),
       payment.creditCardNumber,
       payment.expirationDate,
       payment.cvvCode,
@@ -83,10 +83,10 @@ async function insertOrder(request, response) {
   client.query(
     OrderQuery,
     [
-      request.body.id,
+      Math.round(request.body.id),
       date.toString(),
-      request.body.payment.id,
-      request.body.shipping.id,
+      Math.round(request.body.payment.id),
+      Math.round(request.body.shipping.id),
     ],
     (err, res) => {
       if (err) throw err;
@@ -101,7 +101,7 @@ async function insertPlants(request, response) {
   for (item in request.body.product) {
     client.query(
       PlantsQuery,
-      [request.body.id, item.id, item.quantity],
+      [Math.round(request.body.id), item.id, item.quantity],
       (err, res) => {
         if (err) throw err;
         console.log(res);
