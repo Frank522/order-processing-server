@@ -138,9 +138,9 @@ async function checkInventory(request, result) {
                   cart[i].quantity,
                   "and",
                   inventory[j].name,
-                  inventory[j].inventory
+                  inventory[j].quantity
                 );
-                if (cart[i].quantity > inventory[j].inventory) {
+                if (cart[i].quantity > inventory[j].quantity) {
                   // result.status(403);
                   result.status(403);
                   result.send();
