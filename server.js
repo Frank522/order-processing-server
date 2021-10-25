@@ -29,7 +29,7 @@ app.use(
 
 const ShippingQuery =
   "INSERT INTO shippingInfo VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
-const PaymentQuery = "INSERT INTO PaymentInfo VALUES ($1, $2, $3, $4);";
+const PaymentQuery = "INSERT INTO paymentInfo VALUES ($1, $2, $3, $4);";
 const OrderQuery = "INSERT INTO orders VALUES ($1, $2, $3, $4)";
 const PlantsQuery = "INSERT INTO plant_orders ($1, $2, $3, $4)";
 
@@ -41,14 +41,15 @@ async function insertShipping(request, response) {
     ShippingQuery,
     [
       shipping.id,
-      shipping.name,
       shipping.address,
       shipping.city,
       shipping.state,
+      shipping.name,
       shipping.zipcode,
       shipping.email,
       shipping.shipping_method,
       shipping.shipping_method2,
+      shipping.name
     ],
     (err, res) => {
       if (err) throw err;
@@ -66,7 +67,7 @@ async function insertPayment(request, response) {
     [
       payment.id,
       payment.creditCardNumber,
-      payment.expirationDAte,
+      payment.expirationDate,
       payment.cvvCode,
     ],
     (err, res) => {
@@ -182,7 +183,7 @@ async function updateInventory(request, result) {
 
 app.post(
   "/OrderMicroservice/Order",
-  jsonParser,
+  jsonParser, //method changes from POST to OPTIONS if removed
   checkInventory,
   insertShipping,
   insertPayment,
