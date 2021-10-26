@@ -30,8 +30,8 @@ app.use(
 const ShippingQuery =
   "INSERT INTO shippingInfo VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
 const PaymentQuery = "INSERT INTO paymentInfo VALUES ($1, $2, $3, $4);";
-const OrderQuery = "INSERT INTO orders VALUES ($1, $2, $3, $4)";
-const PlantsQuery = "INSERT INTO plant_orders VALUES($1, $2, $3, $4)";
+const OrderQuery = "INSERT INTO orders VALUES ($1, $2, $3, $4);";
+const PlantsQuery = "INSERT INTO plant_orders VALUES($1, $2, $3, $4);";
 
 async function insertShipping(request, response) {
 
