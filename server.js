@@ -40,7 +40,7 @@ async function insertShipping(request, response) {
   client.query(
     ShippingQuery,
     [
-      shipping.id
+      shipping.id,
       shipping.address,
       shipping.city,
       shipping.state,
@@ -171,8 +171,9 @@ async function checkInventory(request, result, next) {
 
 async function updateInventory(request, result) {
   console.log("Got body:", request.body);
-  http.post(
-    "https://cse5234-inventory-microservice.herokuapp.com/InventoryMicroservice/Update",
+  const options = new URL("https://cse5234-inventory-microservice.herokuapp.com/InventoryMicroservice/Update")
+  http.request(
+    options,
     async function () {
         //TODO: for each plant update the inventory count, 
         //create functionality in Inventory microservice to do that as well
