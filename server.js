@@ -40,7 +40,7 @@ async function insertShipping(request, response) {
   client.query(
     ShippingQuery,
     [
-      Math.round(shipping.id),
+      shipping.id
       shipping.address,
       shipping.city,
       shipping.state,
@@ -64,7 +64,7 @@ async function insertPayment(request, response) {
   client.query(
     PaymentQuery,
     [
-      Math.round(payment.id),
+      payment.id,
       payment.creditCardNumber,
       payment.expirationDate,
       payment.cvvCode,
@@ -83,10 +83,10 @@ async function insertOrder(request, response) {
   client.query(
     OrderQuery,
     [
-      Math.round(request.body.id),
+      request.body.id,
       date.toString(),
-      Math.round(request.body.payment.id),
-      Math.round(request.body.shipping.id),
+      request.body.payment.id,
+      request.body.shipping.id,
     ],
     (err, res) => {
       if (err) throw err;
