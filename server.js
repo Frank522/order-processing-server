@@ -189,15 +189,27 @@ app
 .post(
   jsonParser,
   insertShipping,
+)
+.post(
+  jsonParser,
   insertPayment,
+)
+.post(
+  jsonParser,
   insertOrder,
+)
+.post(
+  jsonParser,
   insertPlants,
+)
+.post(
+  jsonParser,
   checkInventory,
 )
-
-//   updateInventory,
-
-// )
+.post(
+  jsonParser,
+  updateInventory
+)
 
 var server = app.listen(port, function () {
   var host = server.address().address;
