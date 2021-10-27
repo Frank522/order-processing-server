@@ -28,15 +28,15 @@ app.use(
 );
 
 const ShippingQuery =
-  "INSERT INTO shippingInfo VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
-const PaymentQuery = "INSERT INTO PaymentInfo VALUES ($1, $2, $3, $4);";
-const OrderQuery = "INSERT INTO orders VALUES ($1, $2, $3, $4)";
-const PlantsQuery = "INSERT INTO plant_orders VALUES($1, $2, $3)";
+  "INSERT INTO shippingInfo (id,address,city,state,zipcode,email,shipping_method1,shipping_method2,name)VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
+const PaymentQuery = "INSERT INTO PaymentInfo (id,creditcardnumber,expirationdate,cvvcode)VALUES ($1, $2, $3, $4);";
+const OrderQuery = "INSERT INTO orders (id,shippingid,paymentid,order_date)VALUES ($1, $2, $3, $4)";
+const PlantsQuery = "INSERT INTO plant_orders(order_id,plant_id,quantity_purchased) VALUES($1, $2, $3)";
 
 async function insertShipping(request, response) {
   let shipping = request.body.shipping;
   client.query(
-    ShippingQuery,
+    "INSERT INTO shippingInfo (id,address,city,state,zipcode,email,shipping_method1,shipping_method2,name)VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);",
     [
       shipping.id,
       shipping.address,
