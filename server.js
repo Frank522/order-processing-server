@@ -56,7 +56,7 @@ async function insertShipping(request, response) {
     ],
     (err, res) => {
       if (err) throw err;
-      console.log(res);
+      console.log(err,res);
       client.end();
     }
   );
@@ -182,14 +182,17 @@ async function updateInventory(request, result) {
 app
 .route("/OrderMicroservice/Order")
 .post(
-  jsonParser,
-  checkInventory,
-  insertShipping,
-  insertPayment,
-  insertOrder,
-  insertPlants,
-  updateInventory
-);
+  insertShipping
+)
+// .post(
+//   jsonParser,
+//   checkInventory,
+//   insertShipping,
+//   insertPayment,
+//   insertOrder,
+//   insertPlants,
+//   updateInventory
+// );
 
 var server = app.listen(port, function () {
   var host = server.address().address;
