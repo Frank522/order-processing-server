@@ -41,6 +41,7 @@ const PlantsQuery = "INSERT INTO plant_orders(order_id,plant_id,quantity_purchas
 
 async function insertShipping(request, response) {
   let shipping = request.body.shipping;
+  console.log(request.body.shipping);
   client.query(
     'INSERT INTO shippinginfo (id,address,city,state,zipcode,email,shipping_method1,shipping_method2,name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);',
     [
