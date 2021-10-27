@@ -178,11 +178,11 @@ async function updateInventory(request, result) {
     }
   );
 }
-// app.post('/', (req, res) => {
+app.post('/OrderMicroservice/Order', (req, res) => {
 
-//   console.log('message is delivered');
+  console.log('message is delivered');
 
-// });
+});
 const Try = (request, response) => {
   const { id, address,city,state,zipCode,email,shipping_method,shipping_method2,name } = request.body
 
