@@ -11,12 +11,7 @@ var bodyParser = require("body-parser");
 var jsonParser = bodyParser.json();
 
 const cors = require("cors");
-var router = express.Router();
 
-router.get('/', function(req, res, next) {  
-  res.status(200).send("Hi, It works!")  
-  next();
-});  
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
