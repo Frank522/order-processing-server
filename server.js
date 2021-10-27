@@ -32,6 +32,7 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
   next();
 });
+app.use(bodyParser.urlencoded({ extended: false }));
 
 const ShippingQuery =
   "INSERT INTO shippinginfo (id,address,city,state,zipcode,email,shipping_method1,shipping_method2,name)VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
