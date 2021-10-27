@@ -178,43 +178,18 @@ async function updateInventory(request, result) {
     }
   );
 }
-const insert = (request, response) => {
 
-  console.log('message is delivered');
-  const { id, address,city,state,zipCode,email,shipping_method,shipping_method2,name } = request.body;
-  console.log(request.body);
-  client.query(
-    'INSERT INTO shippinginfo (id,address,city,state,zipcode,email,shipping_method1,shipping_method2,name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);',
-    [
-      shipping.id,
-      shipping.address,
-      shipping.city,
-      shipping.state,
-      shipping.zipCode,
-      shipping.email,
-      shipping.shipping_method,
-      shipping.shipping_method2,
-      shipping.name,
-    ],
-    (error) => {
-      if (error) {
-        throw error
-      }
-      response.status(201).json({ status: 'success', message: 'Data added.' })
-    }
-  )
-}
-app.post(insert);
-// app.post(
-//   "/OrderMicroservice/Order",
-//   jsonParser,
-//   checkInventory,
-//   insertShipping,
-//   insertPayment,
-//   insertOrder,
-//   insertPlants,
-//   updateInventory
-// );
+app
+.route("/OrderMicroservice/Order")
+.post(
+  jsonParser,
+  checkInventory,
+  insertShipping,
+  insertPayment,
+  insertOrder,
+  insertPlants,
+  updateInventory
+);
 
 var server = app.listen(port, function () {
   var host = server.address().address;
