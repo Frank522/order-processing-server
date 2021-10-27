@@ -188,8 +188,9 @@ app
 .route("/OrderMicroservice/Order")
 .post(
   jsonParser,
-  insertShipping,
-  insertPayment,
+  // insertShipping,
+  // insertPayment,
+  insertOrder,
 )
   
 //   insertOrder,
