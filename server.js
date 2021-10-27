@@ -11,7 +11,12 @@ var bodyParser = require("body-parser");
 var jsonParser = bodyParser.json();
 
 const cors = require("cors");
+var router = express.Router();
 
+router.get('/', function(req, res, next) {  
+  res.status(200).send("Hi, It works!")  
+  next();
+});  
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -26,11 +31,11 @@ app.use(
     origin: "*",
   })
 );
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 const ShippingQuery =
   "INSERT INTO shippinginfo (id,address,city,state,zipcode,email,shipping_method1,shipping_method2,name)VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
