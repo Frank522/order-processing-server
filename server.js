@@ -26,11 +26,12 @@ app.use(
     origin: "*",
   })
 );
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
+  next();
+});
 
 const ShippingQuery =
   "INSERT INTO shippinginfo (id,address,city,state,zipcode,email,shipping_method1,shipping_method2,name)VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
@@ -176,17 +177,46 @@ async function updateInventory(request, result) {
     }
   );
 }
+// app.post('/', (req, res) => {
 
-app.post(
-  "/OrderMicroservice/Order",
-  jsonParser,
-  checkInventory,
-  insertShipping,
-  insertPayment,
-  insertOrder,
-  insertPlants,
-  updateInventory
-);
+//   console.log('message is delivered');
+
+// });
+const Try = (request, response) => {
+  const { author, title } = request.body
+
+  pool.query(
+    'INSERT INTO shippinginfo (id,address,city,state,zipcode,email,shipping_method1,shipping_method2,name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);',
+    [
+      shipping.id,
+      shipping.address,
+      shipping.city,
+      shipping.state,
+      shipping.zipCode,
+      shipping.email,
+      shipping.shipping_method,
+      shipping.shipping_method2,
+      shipping.name,
+    ],
+    (error) => {
+      if (error) {
+        throw error
+      }
+      response.status(201).json({ status: 'success', message: 'Book added.' })
+    }
+  )
+}
+app.post(Try);
+// app.post(
+//   "/OrderMicroservice/Order",
+//   jsonParser,
+//   checkInventory,
+//   insertShipping,
+//   insertPayment,
+//   insertOrder,
+//   insertPlants,
+//   updateInventory
+// );
 
 var server = app.listen(port, function () {
   var host = server.address().address;
