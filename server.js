@@ -190,11 +190,10 @@ app
   jsonParser,
   // insertShipping,
   // insertPayment,
-  insertOrder,
+  // insertOrder,
+  insertPlants,
 )
-  
-//   insertOrder,
-//   insertPlants,
+
 //   updateInventory,
 //   checkInventory,
 // )
