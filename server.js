@@ -32,8 +32,7 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
   next();
 });
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+
 
 const ShippingQuery =
   "INSERT INTO shippinginfo (id,address,city,state,zipcode,email,shipping_method1,shipping_method2,name)VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
@@ -66,7 +65,7 @@ async function insertShipping(request, response) {
 
 async function insertPayment(request, response) {
   let payment = request.body.cart;
-  console.log(payment);
+  console.log(payment.id);
   client.query(
     'INSERT INTO paymentinfo (id,creditcardnumber,expirationdate,cvvcode) VALUES ($1, $2, $3, $4);',
     [
