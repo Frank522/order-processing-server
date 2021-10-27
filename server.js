@@ -183,13 +183,15 @@ app
 .route("/OrderMicroservice/Order")
 .post(
   jsonParser,
-  checkInventory,
   insertShipping,
   insertPayment,
-  insertOrder,
-  insertPlants,
-  updateInventory
 )
+  
+//   insertOrder,
+//   insertPlants,
+//   updateInventory,
+//   checkInventory,
+// )
 
 var server = app.listen(port, function () {
   var host = server.address().address;
