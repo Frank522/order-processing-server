@@ -36,7 +36,7 @@ const PlantsQuery = "INSERT INTO plant_orders VALUES($1, $2, $3, $4);";
 async function insertShipping(request, response) {
 
   let shipping = request.body.shipping;
-  console.log("Inserting Shipping\n");
+  console.log(shipping.address);
   client.query(
     ShippingQuery,
     [
@@ -59,7 +59,7 @@ async function insertShipping(request, response) {
 }
 
 async function insertPayment(request, response) {
-  let payment = request.body.cart;
+  let payment = request.body.payment;
   console.log("Inserting Payment\n");
   client.query(
     PaymentQuery,
@@ -113,7 +113,7 @@ async function insertPlants(request, response) {
 }
 
 async function checkInventory(request, result, next) {
-  let cart = request.body.product;
+  let cart = request.body.cart;
   console.log("Got body:", request.body);
   http
     .get(
