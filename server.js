@@ -21,106 +21,92 @@ const client = new Client({
 
 client.connect();
 
-app.use(function (req, res, next){
-  // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  res.header('Access-Control-Allow-Origin', '*');
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  // Pass to next layer of middleware
-  next();
-});
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 const ShippingQuery =
-  "INSERT INTO shippinginfo VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
-const PaymentQuery = "INSERT INTO paymentinfo VALUES ($1, $2, $3, $4);";
-const OrderQuery = "INSERT INTO orders VALUES ($1, $2, $3, $4);";
-const PlantsQuery = "INSERT INTO plant_orders VALUES($1, $2, $3);";
+  "INSERT INTO shippingInfo VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
+const PaymentQuery = "INSERT INTO PaymentInfo VALUES ($1, $2, $3, $4);";
+const OrderQuery = "INSERT INTO orders VALUES ($1, $2, $3, $4)";
+const PlantsQuery = "INSERT INTO plant_orders VALUES($1, $2, $3)";
 
 async function insertShipping(request, response) {
-
   let shipping = request.body.shipping;
-  console.log(shipping.address);
   client.query(
     ShippingQuery,
     [
+      shipping.id,
       shipping.address,
       shipping.city,
+      shipping.state,
+      shipping.zipcode,
       shipping.email,
-      shipping.id,
-      shipping.name,
       shipping.shipping_method,
       shipping.shipping_method2,
-      shipping.state,
-      shipping.zipcode
+      shipping.name,
     ],
     (err, res) => {
       if (err) throw err;
       console.log(res);
-      // client.end();
+      client.end();
     }
   );
 }
 
 async function insertPayment(request, response) {
-  let payment = request.body.payment;
-  console.log("Inserting Payment\n");
+  let payment = request.body.cart;
+
   client.query(
     PaymentQuery,
-    [ 
-      payment.creditCardNumber,
-      payment.cvvCode,
-      payment.expirationDate,
+    [
       payment.id,
+      payment.creditCardNumber,
+      payment.expirationDAte,
+      payment.cvvCode,
     ],
     (err, res) => {
       if (err) throw err;
       console.log(res);
-      // client.end();
+      client.end();
     }
   );
 }
 
 async function insertOrder(request, response) {
   const date = new Date();
-  console.log("Inserting Order\n");
   client.query(
     OrderQuery,
     [
       request.body.id,
-      date.toString(),
-      request.body.payment.id,
       request.body.shipping.id,
+      request.body.payment.id,
+      date.toString(),
     ],
     (err, res) => {
       if (err) throw err;
       console.log(res);
-      // client.end();
+      client.end();
     }
   );
 }
 
 async function insertPlants(request, response) {
-  console.log("Inserting Plants\n");
-  for (item in request.body.product) {
+  for (item in request.body.product)
     client.query(
       PlantsQuery,
-      [Math.round(request.body.id), item.id, item.quantity],
+      [request.body.id, item.id, item.quantity],
       (err, res) => {
         if (err) throw err;
         console.log(res);
-        // client.end();
+        client.end();
       }
     );
-  }
-  client.end();
 }
 
-async function checkInventory(request, result, next) {
-  let cart = request.body.cart;
+async function checkInventory(request, result) {
   console.log("Got body:", request.body);
   http
     .get(
@@ -140,7 +126,7 @@ async function checkInventory(request, result, next) {
 
         response.on("end", () => {
           console.log("Response ended: ");
-          const inventory = JSON.parse(data);
+          const inventory = JSON.parse(Buffer.concat(data).toString());
           let i, j;
           for (i = 0; i < cart.length; i++) {
             for (j = 0; j < inventory.length; j++) {
@@ -151,9 +137,9 @@ async function checkInventory(request, result, next) {
                   cart[i].quantity,
                   "and",
                   inventory[j].name,
-                  inventory[j].quantity
+                  inventory[j].inventory
                 );
-                if (cart[i].quantity > inventory[j].quantity) {
+                if (cart[i].quantity > inventory[j].inventory) {
                   // result.status(403);
                   result.status(403);
                   result.send();
@@ -173,15 +159,13 @@ async function checkInventory(request, result, next) {
     .on("error", (err) => {
       console.log("Error: ", err.message);
     });
-    next();
 }
 
 async function updateInventory(request, result) {
   console.log("Got body:", request.body);
-  const options = new URL("https://cse5234-inventory-microservice.herokuapp.com/InventoryMicroservice/Update")
-  http.request(
-    options,
-    async function () {
+  http.post(
+    "https://cse5234-inventory-microservice.herokuapp.com/InventoryMicroservice/Update",
+    async function (response) {
         //TODO: for each plant update the inventory count, 
         //create functionality in Inventory microservice to do that as well
     }
@@ -190,7 +174,7 @@ async function updateInventory(request, result) {
 
 app.post(
   "/OrderMicroservice/Order",
-  jsonParser, //method changes from POST to OPTIONS if removed
+  jsonParser,
   checkInventory,
   insertShipping,
   insertPayment,
