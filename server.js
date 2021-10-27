@@ -66,7 +66,7 @@ async function insertPayment(request, response) {
   let payment = request.body.cart;
 
   client.query(
-    PaymentQuery,
+    'INSERT INTO paymentinfo (id,creditcardnumber,expirationdate,cvvcode) VALUES ($1, $2, $3, $4);',
     [
       payment.id,
       payment.creditCardNumber,
@@ -84,7 +84,7 @@ async function insertPayment(request, response) {
 async function insertOrder(request, response) {
   const date = new Date();
   client.query(
-    OrderQuery,
+    'INSERT INTO orders (id,shippingid,paymentid,order_date) VALUES ($1, $2, $3, $4);',
     [
       request.body.id,
       request.body.shipping.id,
@@ -102,7 +102,7 @@ async function insertOrder(request, response) {
 async function insertPlants(request, response) {
   for (item in request.body.product)
     client.query(
-      PlantsQuery,
+      'INSERT INTO plant_orders(order_id,plant_id,quantity_purchased) VALUES ($1, $2, $3);',
       [request.body.id, item.id, item.quantity],
       (err, res) => {
         if (err) throw err;
