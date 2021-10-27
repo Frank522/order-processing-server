@@ -64,7 +64,9 @@ async function insertShipping(request, response) {
 }
 
 async function insertPayment(request, response) {
-  let payment = request.body.cart;
+  // let payment = request.body.cart;
+  let payment = request.body.payment;
+  console.log(payment.id);
   console.log(payment.creditCardNumber);
   console.log(payment.expirationDate);
   console.log(payment.cvvCode);
