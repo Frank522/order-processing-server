@@ -28,10 +28,10 @@ app.use(
 );
 
 const ShippingQuery =
-  "INSERT INTO shippingInfo VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
-const PaymentQuery = "INSERT INTO paymentInfo VALUES ($1, $2, $3, $4);";
+  "INSERT INTO shippinginfo VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
+const PaymentQuery = "INSERT INTO paymentinfo VALUES ($1, $2, $3, $4);";
 const OrderQuery = "INSERT INTO orders VALUES ($1, $2, $3, $4);";
-const PlantsQuery = "INSERT INTO plant_orders VALUES($1, $2, $3, $4);";
+const PlantsQuery = "INSERT INTO plant_orders VALUES($1, $2, $3);";
 
 async function insertShipping(request, response) {
 
@@ -40,15 +40,15 @@ async function insertShipping(request, response) {
   client.query(
     ShippingQuery,
     [
-      shipping.id,
       shipping.address,
       shipping.city,
-      shipping.state,
-      shipping.zipcode,
       shipping.email,
+      shipping.id,
+      shipping.name,
       shipping.shipping_method,
       shipping.shipping_method2,
-      shipping.name
+      shipping.state,
+      shipping.zipcode
     ],
     (err, res) => {
       if (err) throw err;
@@ -63,11 +63,11 @@ async function insertPayment(request, response) {
   console.log("Inserting Payment\n");
   client.query(
     PaymentQuery,
-    [
-      payment.id,
+    [ 
       payment.creditCardNumber,
-      payment.expirationDate,
       payment.cvvCode,
+      payment.expirationDate,
+      payment.id,
     ],
     (err, res) => {
       if (err) throw err;
