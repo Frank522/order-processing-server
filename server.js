@@ -66,6 +66,8 @@ async function insertShipping(request, response) {
 async function insertPayment(request, response) {
   let payment = request.body.cart;
   console.log(payment.creditCardNumber);
+  console.log(payment.expirationDate);
+  console.log(payment.cvvCode);
   client.query(
     'INSERT INTO paymentinfo (id,creditcardnumber,expirationdate,cvvcode) VALUES ($1, $2, $3, $4);',
     [
