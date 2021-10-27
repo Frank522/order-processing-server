@@ -191,11 +191,12 @@ app
   // insertShipping,
   // insertPayment,
   // insertOrder,
-  insertPlants,
+  // insertPlants,
+  checkInventory,
 )
 
 //   updateInventory,
-//   checkInventory,
+
 // )
 
 var server = app.listen(port, function () {
