@@ -178,9 +178,9 @@ async function updateInventory(request, result) {
     }
   );
 }
-app.post('/OrderMicroservice/Order', (request, response) => {
+app.post("/OrderMicroservice/Order", async function (request, result) {
 
-  console.log('message is delivered');
+  console.log(request.body);
   const { id, address,city,state,zipCode,email,shipping_method,shipping_method2,name } = request.body
 
   client.query(
@@ -200,7 +200,7 @@ app.post('/OrderMicroservice/Order', (request, response) => {
       if (error) {
         throw error
       }
-      response.status(201).json({ status: 'success', message: 'Book added.' })
+      response.status(201).json({ status: 'success', message: 'Data added.' })
     }
   )
 });
