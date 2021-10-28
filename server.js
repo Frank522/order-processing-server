@@ -106,7 +106,7 @@ async function insertOrder(request, response) {
 }
 
 async function insertPlants(request, response) {
-  req.body.product.forEach(item => {
+  request.body.product.forEach(item => {
     client.query(
       'INSERT INTO plant_orders(order_id,plant_id,quantity_purchased) VALUES ($1, $2, $3);',
       [request.body.id, item.id, item.quantity],
