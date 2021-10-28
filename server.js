@@ -61,6 +61,7 @@ async function insertShipping(request, response) {
       // client.end();
     }
   );
+  client.end();
 }
 
 async function insertPayment(request, response) {
