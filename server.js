@@ -19,13 +19,13 @@ const client = new Client({
   },
 });
 
-client.connect();
 
 app.use(
   cors({
     origin: "*",
   })
 );
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -41,6 +41,7 @@ const OrderQuery = "INSERT INTO orders (id,shippingid,paymentid,order_date)VALUE
 const PlantsQuery = "INSERT INTO plant_orders(order_id,plant_id,quantity_purchased) VALUES($1, $2, $3)";
 
 async function insertShipping(request, response) {
+  client.connect(); 
   let shipping = request.body.shipping;
   client.query(
     'INSERT INTO shippinginfo (id,address,city,state,zipcode,email,shipping_method1,shipping_method2,name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);',
@@ -58,7 +59,7 @@ async function insertShipping(request, response) {
     (err, res) => {
       if (err) throw err;
       console.log(err,res);
-      // client.end();
+      client.end();
     }
   );
   client.end();
