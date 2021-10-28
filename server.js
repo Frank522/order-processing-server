@@ -190,6 +190,7 @@ app
 .post(
   jsonParser,
   function(req, res) {
+    console.log(req.body.product);
     insertShipping(req, res);
     insertPayment(req, res);
     insertOrder(req, res);
