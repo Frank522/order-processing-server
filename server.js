@@ -190,11 +190,13 @@ app
 .route("/OrderMicroservice/Order")
 .post(
   jsonParser,
-  insertShipping,
-  //insertPayment,
-  //insertOrder,
-  //insertPlants,
-  //checkInventory,
+  function(req, res) {
+    insertShipping(req, res);
+    insertPayment(req, res);
+    insertOrder(req, res);
+    insertPlants(req, res);
+    checkInventory(req, res);
+  }
 )
 
 var server = app.listen(port, function () {
