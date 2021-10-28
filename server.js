@@ -62,7 +62,6 @@ async function insertShipping(request, response) {
       client.end();
     }
   );
-  client.end();
 }
 
 async function insertPayment(request, response) {
@@ -83,7 +82,7 @@ async function insertPayment(request, response) {
     (err, res) => {
       if (err) throw err;
       console.log(res);
-      // client.end();
+      client.end();
     }
   );
 }
@@ -101,7 +100,7 @@ async function insertOrder(request, response) {
     (err, res) => {
       if (err) throw err;
       console.log(res);
-      // client.end();
+      client.end();
     }
   );
 }
@@ -114,7 +113,7 @@ async function insertPlants(request, response) {
       (err, res) => {
         if (err) throw err;
         console.log(res);
-        // client.end();
+        client.end();
       }
     );
 }
