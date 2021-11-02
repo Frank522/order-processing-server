@@ -1,6 +1,7 @@
 const express = require("express");
 const http = require("https");
 const app = express();
+var request = require('request');
 
 const { Client } = require("pg");
 
@@ -174,15 +175,29 @@ async function checkInventory(request, result) {
     });
 }
 
+
 async function updateInventory(request, result) {
   console.log("Got body:", request.body);
-  http.post(
-    "https://cse5234-inventory-microservice.herokuapp.com/InventoryMicroservice/Update",
-    async function (response) {
-        //TODO: for each plant update the inventory count, 
-        //create functionality in Inventory microservice to do that as well
-    }
-  );
+  app.post('/add', function(req, res){
+    console.log(req.body);
+    request.post(
+      {
+      url:'https://cse5234-inventory-microservice.herokuapp.com/InventoryMicroservice/Update',
+      json: {
+        products: request.body.product
+          },
+      headers: {
+          'Content-Type': 'application/json'
+      }
+      },
+    function(error, response, body){
+      // console.log(error);
+      // console.log(response);
+      console.log(body);
+      res.send(body);
+    });
+    // res.send("body");
+  });
 }
 
 app
@@ -190,12 +205,12 @@ app
 .post(
   jsonParser,
   function(req, res) {
-    console.log(req.body.product);
+    checkInventory(req, res);
     insertShipping(req, res);
     insertPayment(req, res);
     insertOrder(req, res);
-    insertPlants(req, res);
-    checkInventory(req, res);
+    insertPlants(req, res);  
+    updateInventory(req, res);
   }
 )
 
