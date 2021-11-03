@@ -204,25 +204,34 @@ async function updateInventory(request, result) {
 async function ToPayment(request, res) {
 
   console.log("Got body:", request.body);
-  request.post(
-    {
-    url:'https://cse5234-payment-microservice.herokuapp.com/PaymentMicroservice/Payment',
-    json: {
+  axios({
+    method: 'post',
+    url: 'https://cse5234-payment-microservice.herokuapp.com/',
+    data: {
       payment: request.body.payment,
       entity: "Garden",
       businessAccount: "01123456"
-    },
-    headers: {
-        'Content-Type': 'application/json'
     }
-    },
-  function(error, response, body){
-    // console.log(error);
-    // console.log(response);
-    console.log(body);
-    res.send(body);
   });
-  res.send("body");
+  // request.post(
+  //   {
+  //   url:'https://cse5234-payment-microservice.herokuapp.com/PaymentMicroservice/Payment',
+  //   json: {
+  //     payment: request.body.payment,
+  //     entity: "Garden",
+  //     businessAccount: "01123456"
+  //   },
+  //   headers: {
+  //       'Content-Type': 'application/json'
+  //   }
+  //   },
+  // function(error, response, body){
+  //   // console.log(error);
+  //   // console.log(response);
+  //   console.log(body);
+  //   res.send(body);
+  // });
+  // res.send("body");
 }
 // async function ToShipping(request, result) {
 //   console.log("Got body:", request.body);
