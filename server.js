@@ -176,29 +176,29 @@ async function checkInventory(request, result) {
 }
 
 
-async function updateInventory(request, result) {
-  console.log("Got body:", request.body);
-  app.post('/add', function(req, res){
-    console.log(req.body);
-    request.post(
-      {
-      url:'https://cse5234-inventory-microservice.herokuapp.com/InventoryMicroservice/Update',
-      json: {
-        products: request.body.product
-          },
-      headers: {
-          'Content-Type': 'application/json'
-      }
-      },
-    function(error, response, body){
-      // console.log(error);
-      // console.log(response);
-      console.log(body);
-      res.send(body);
-    });
-    // res.send("body");
-  });
-}
+// async function updateInventory(request, result) {
+//   console.log("Got body:", request.body);
+//   app.post('/add', function(req, res){
+//     console.log(req.body);
+//     request.post(
+//       {
+//       url:'https://cse5234-inventory-microservice.herokuapp.com/InventoryMicroservice/Update',
+//       json: {
+//         products: request.body.product
+//           },
+//       headers: {
+//           'Content-Type': 'application/json'
+//       }
+//       },
+//     function(error, response, body){
+//       // console.log(error);
+//       // console.log(response);
+//       console.log(body);
+//       res.send(body);
+//     });
+//     // res.send("body");
+//   });
+// }
 
 
 async function ToPayment(request, result) {
@@ -237,29 +237,29 @@ async function ToPayment(request, result) {
     // res.send("body");
   // });
 }
-async function ToShipping(request, result) {
-  console.log("Got body:", request.body);
-  app.post('/ShippingMicroservice/Shipping', function(req, res){
-    console.log(req.body);
-    request.post(
-      {
-      url:'https://cse5234-payment-microservice.herokuapp.com/ShippingMicroservice/Shipping',
-      json: {
-        shipping: request.body.shipping, 
-      },
-      headers: {
-          'Content-Type': 'application/json'
-      }
-      },
-    function(error, response, body){
-      // console.log(error);
-      // console.log(response);
-      console.log(body);
-      res.send(body);
-    });
-    // res.send("body");
-  });
-}
+// async function ToShipping(request, result) {
+//   console.log("Got body:", request.body);
+//   app.post('/ShippingMicroservice/Shipping', function(req, res){
+//     console.log(req.body);
+//     request.post(
+//       {
+//       url:'https://cse5234-payment-microservice.herokuapp.com/ShippingMicroservice/Shipping',
+//       json: {
+//         shipping: request.body.shipping, 
+//       },
+//       headers: {
+//           'Content-Type': 'application/json'
+//       }
+//       },
+//     function(error, response, body){
+//       // console.log(error);
+//       // console.log(response);
+//       console.log(body);
+//       res.send(body);
+//     });
+//     // res.send("body");
+//   });
+// }
 app
 .route("/OrderMicroservice/Order")
 .post(
@@ -270,9 +270,9 @@ app
     insertPayment(req, res);
     insertOrder(req, res);
     insertPlants(req, res);  
-    updateInventory(req, res);
+    // updateInventory(req, res);
     ToPayment(req,res);
-    ToShipping(req,res);
+    // ToShipping(req,res);
   }
 )
 
