@@ -1,7 +1,7 @@
 const express = require("express");
 const http = require("https");
 const app = express();
-
+const request = require("request")
 const axios = require('axios');
 const { Client } = require("pg");
 
@@ -204,50 +204,43 @@ async function updateInventory(request, result) {
 async function ToPayment(request, res) {
 
   console.log("Got body:", request.body);
-  axios({
-    method: 'get',
-    url: 'https://cse5234-order-microservice.herokuapp.com/OrderMicroservice/Order',
-    responseType: 'json',
-    withCredentials: true,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      }
-    // headers: { "Content-Type": "application/json" },
-    // data: {
-    //   payment: request.body.payment,
-    //   entity: "Garden",
-    //   businessAccount: "01123456699549388345"
-    // }
-  })
-  .then(function (response) {
-    //handle success
-    console.log(response);
-  })
-  .catch(function (response) {
-    //handle error
-    console.log(response);
-  });
-  // request.post(
-  //   {
-  //   url:'https://cse5234-payment-microservice.herokuapp.com/PaymentMicroservice/Payment',
-  //   json: {
+  // axios({
+  //   method: 'post',
+  //   url: 'https://cse5234-order-microservice.herokuapp.com/OrderMicroservice/Order',
+  //   headers: { "Content-Type": "application/json" },
+  //   data: {
   //     payment: request.body.payment,
   //     entity: "Garden",
-  //     businessAccount: "01123456"
-  //   },
-  //   headers: {
-  //       'Content-Type': 'application/json'
+  //     businessAccount: "01123456699549388345"
   //   }
-  //   },
-  // function(error, response, body){
-  //   // console.log(error);
-  //   // console.log(response);
-  //   console.log(body);
-  //   res.send(body);
+  // })
+  // .then(function (response) {
+  //   //handle success
+  //   console.log(response);
+  // })
+  // .catch(function (response) {
+  //   //handle error
+  //   console.log(response);
   // });
-  // res.send("body");
+  request.post(
+    {
+    url:'https://cse5234-payment-microservice.herokuapp.com/PaymentMicroservice/Payment',
+    json: {
+      payment: request.body.payment,
+      entity: "Garden",
+      businessAccount: "01123456"
+    },
+    headers: {
+        'Content-Type': 'application/json'
+    }
+    },
+  function(error, response, body){
+    // console.log(error);
+    // console.log(response);
+    console.log(body);
+    res.send(body);
+  });
+  res.send("body");
 }
 // async function ToShipping(request, result) {
 //   console.log("Got body:", request.body);
