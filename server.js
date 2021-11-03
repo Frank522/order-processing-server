@@ -35,17 +35,11 @@ app.use(function(req, res, next) {
 });
 
 
-const ShippingQuery =
-  "INSERT INTO shippingInfo (id,address,city,state,zipcode,email,shipping_method1,shipping_method2,name)VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
-const PaymentQuery = "INSERT INTO paymentInfo (id,creditcardnumber,expirationdate,cvvcode)VALUES ($1, $2, $3, $4);";
-const OrderQuery = "INSERT INTO orders (id,shippingid,paymentid,order_date)VALUES ($1, $2, $3, $4)";
-const PlantsQuery = "INSERT INTO plant_orders(order_id,plant_id,quantity_purchased) VALUES($1, $2, $3)";
-
 async function insertShipping(request, response) {
   client.connect(); 
   let shipping = request.body.shipping;
   client.query(
-    'INSERT INTO shippinginfo (id,address,city,state,zipcode,email,shipping_method1,shipping_method2,name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);',
+    'INSERT INTO shippinginfo (id,address,city,state,zipcode,email,shipping_method1,name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);',
     [
       shipping.id,
       shipping.address,
@@ -54,7 +48,6 @@ async function insertShipping(request, response) {
       shipping.zipCode,
       shipping.email,
       shipping.shipping_method,
-      shipping.shipping_method2,
       shipping.name,
     ],
     (err, res) => {
