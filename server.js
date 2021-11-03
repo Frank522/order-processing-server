@@ -205,14 +205,21 @@ async function ToPayment(request, res) {
 
   console.log("Got body:", request.body);
   axios({
-    method: 'post',
-    url: 'https://cse5234-payment-microservice.herokuapp.com/PaymentMicroservice/Payment',
-    headers: { "Content-Type": "application/json" },
-    data: {
-      payment: request.body.payment,
-      entity: "Garden",
-      businessAccount: "01123456699549388345"
-    }
+    method: 'get',
+    url: 'https://cse5234-order-microservice.herokuapp.com/OrderMicroservice/Order',
+    responseType: 'json',
+    withCredentials: true,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }
+    // headers: { "Content-Type": "application/json" },
+    // data: {
+    //   payment: request.body.payment,
+    //   entity: "Garden",
+    //   businessAccount: "01123456699549388345"
+    // }
   })
   .then(function (response) {
     //handle success
