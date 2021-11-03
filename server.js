@@ -201,8 +201,7 @@ async function updateInventory(request, result) {
 }
 
 
-async function ToPayment(request, res) {
-
+function ToPayment(request, res) {
   // console.log("Got body:", request.body);
   axios({
     method: 'post',
@@ -242,6 +241,7 @@ async function ToPayment(request, res) {
   // });
   // res.send("body");
 }
+ToPayment();
 // async function ToShipping(request, result) {
 //   console.log("Got body:", request.body);
 //   app.post('/ShippingMicroservice/Shipping', function(req, res){
@@ -276,7 +276,7 @@ app
     insertOrder(req, res);
     insertPlants(req, res);  
     updateInventory(req, res);
-    ToPayment(req,res);
+    // ToPayment(req,res);
     // ToShipping(req,res);
   }
 )
