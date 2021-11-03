@@ -207,11 +207,20 @@ async function ToPayment(request, res) {
   axios({
     method: 'post',
     url: 'https://cse5234-payment-microservice.herokuapp.com/PaymentMicroservice/Payment',
+    headers: { "Content-Type": "application/json" },
     data: {
       payment: request.body.payment,
       entity: "Garden",
       businessAccount: "01123456699549388345"
     }
+  })
+  .then(function (response) {
+    //handle success
+    console.log(response);
+  })
+  .catch(function (response) {
+    //handle error
+    console.log(response);
   });
   // request.post(
   //   {
