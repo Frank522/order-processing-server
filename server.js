@@ -2,7 +2,7 @@ const express = require("express");
 const http = require("https");
 const app = express();
 var request = require('request');
-
+const axios = require('axios');
 const { Client } = require("pg");
 
 const port = process.env.PORT || 3002;
@@ -200,6 +200,66 @@ async function updateInventory(request, result) {
   });
 }
 
+
+async function ToPayment(request, result) {
+  console.log("Got body:", request.body);
+  axios.post('/PaymentMicroservice/Payment', {
+    payment: request.body.payment,
+    entity: "Garden",
+    businessAccount: "01123456"
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  // app.post('/PaymentMicroservice/Payment', function(req, res){
+  //   console.log(req.body);
+  //   request.post(
+  //     {
+  //     url:'https://cse5234-payment-microservice.herokuapp.com/PaymentMicroservice/Payment',
+  //     json: {
+  //       payment: request.body.payment,
+  //       entity: "Garden",
+  //       businessAccount: "01123456"
+  //     },
+  //     headers: {
+  //         'Content-Type': 'application/json'
+  //     }
+  //     },
+  //   function(error, response, body){
+  //     // console.log(error);
+  //     // console.log(response);
+  //     console.log(body);
+  //     res.send(body);
+    // });
+    // res.send("body");
+  // });
+}
+async function ToShipping(request, result) {
+  console.log("Got body:", request.body);
+  app.post('/ShippingMicroservice/Shipping', function(req, res){
+    console.log(req.body);
+    request.post(
+      {
+      url:'https://cse5234-payment-microservice.herokuapp.com/ShippingMicroservice/Shipping',
+      json: {
+        shipping: request.body.shipping, 
+      },
+      headers: {
+          'Content-Type': 'application/json'
+      }
+      },
+    function(error, response, body){
+      // console.log(error);
+      // console.log(response);
+      console.log(body);
+      res.send(body);
+    });
+    // res.send("body");
+  });
+}
 app
 .route("/OrderMicroservice/Order")
 .post(
@@ -211,6 +271,8 @@ app
     insertOrder(req, res);
     insertPlants(req, res);  
     updateInventory(req, res);
+    ToPayment(req,res);
+    ToShipping(req,res);
   }
 )
 
