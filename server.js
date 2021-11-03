@@ -201,7 +201,7 @@ async function updateInventory(request, result) {
 }
 
 
-function ToPayment(request, res) {
+async function ToPayment(request, res) {
   // console.log("Got body:", request.body);
   axios({
     method: 'post',
