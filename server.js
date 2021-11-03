@@ -206,7 +206,7 @@ async function ToPayment(request, res) {
   console.log("Got body:", request.body);
   axios({
     method: 'post',
-    url: 'https://cse5234-payment-microservice.herokuapp.com/PaymentMicroservice/Payment',
+    url: 'https://cse5234-payment-microservice.herokuapp.com/',
     data: {
       payment: request.body.payment,
       entity: "Garden",
