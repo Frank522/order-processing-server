@@ -1,7 +1,7 @@
 const express = require("express");
 const http = require("https");
 const app = express();
-var request = require('request');
+
 const axios = require('axios');
 const { Client } = require("pg");
 
