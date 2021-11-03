@@ -201,41 +201,31 @@ async function updateInventory(request, result) {
 }
 
 
-async function ToPayment(request, result) {
+async function ToPayment(request, response) {
+
   console.log("Got body:", request.body);
-  axios.post('/PaymentMicroservice/Payment', {
-    payment: request.body.payment,
-    entity: "Garden",
-    businessAccount: "01123456"
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
+  app.post('/PaymentMicroservice/Payment', function(req, res){
+    console.log(req.body);
+    request.post(
+      {
+      url:'https://cse5234-payment-microservice.herokuapp.com/PaymentMicroservice/Payment',
+      json: {
+        payment: request.body.payment,
+        entity: "Garden",
+        businessAccount: "01123456"
+      },
+      headers: {
+          'Content-Type': 'application/json'
+      }
+      },
+    function(error, response, body){
+      // console.log(error);
+      // console.log(response);
+      console.log(body);
+      res.send(body);
+    });
+    res.send("body");
   });
-  // app.post('/PaymentMicroservice/Payment', function(req, res){
-  //   console.log(req.body);
-  //   request.post(
-  //     {
-  //     url:'https://cse5234-payment-microservice.herokuapp.com/PaymentMicroservice/Payment',
-  //     json: {
-  //       payment: request.body.payment,
-  //       entity: "Garden",
-  //       businessAccount: "01123456"
-  //     },
-  //     headers: {
-  //         'Content-Type': 'application/json'
-  //     }
-  //     },
-  //   function(error, response, body){
-  //     // console.log(error);
-  //     // console.log(response);
-  //     console.log(body);
-  //     res.send(body);
-    // });
-    // res.send("body");
-  // });
 }
 // async function ToShipping(request, result) {
 //   console.log("Got body:", request.body);
