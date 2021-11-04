@@ -178,7 +178,7 @@ async function checkInventory(request, result) {
 
 async function updateInventory(request, result) {
   console.log("Got body:", request.body);
-  app.post('/add', function(req, res){
+  app.post('/', function(req, res){
     console.log(req.body);
     request.post(
       {
