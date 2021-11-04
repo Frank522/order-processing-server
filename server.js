@@ -209,30 +209,20 @@ async function ToPayment(request, res) {
   .then(function (response) {
     //handle success
     console.log(response);
+    client.query(
+      'INSERT INTO paymentinfo (comfirmation) VALUES ($1) where id = $2;',
+      [response.body.confirm, reponse.body.id],
+      (err, res) => {
+        if (err) throw err;
+        console.log(res);
+        //client.end();
+      });
+    
   })
   .catch(function (response) {
     //handle error
     console.log(response);
   });
-  // request.post(
-  //   {
-  //   url:'https://cse5234-payment-microservice.herokuapp.com/PaymentMicroservice/Payment',
-  //   json: {
-  //     payment: request.body.payment,
-  //     entity: "Garden",
-  //     businessAccount: "01123456"
-  //   },
-  //   headers: {
-  //       'Content-Type': 'application/json'
-  //   }
-  //   },
-  // function(error, response, body){
-  //   // console.log(error);
-  //   // console.log(response);
-  //   console.log(body);
-  //   res.send(body);
-  // });
-  // res.send("body");
 }
 
 // async function ToShipping(request, result) {
