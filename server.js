@@ -221,7 +221,7 @@ async function ToPayment(request, res) {
   })
   .catch(function (response) {
     //handle error
-    console.log(response);
+    // console.log(response);
   });
 }
 
