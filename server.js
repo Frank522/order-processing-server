@@ -170,7 +170,7 @@ async function checkInventory(request, result) {
 
 
 async function updateInventory(request, result) {
-  console.log("Got body in updateInventory:", request.body);
+  console.log("Got body in updateInventory:", request.body.product);
   axios({
     method: 'post',
     url: 'https://cse5234-inventory-microservice.herokuapp.com/InventoryMicroservice/Update',
