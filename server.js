@@ -221,29 +221,23 @@ async function ToPayment(request, res) {
   });
 }
 
-// async function ToShipping(request, result) {
-//   console.log("Got body:", request.body);
-//   app.post('/ShippingMicroservice/Shipping', function(req, res){
-//     console.log(req.body);
-//     request.post(
-//       {
-//       url:'https://cse5234-payment-microservice.herokuapp.com/ShippingMicroservice/Shipping',
-//       json: {
-//         shipping: request.body.shipping, 
-//       },
-//       headers: {
-//           'Content-Type': 'application/json'
-//       }
-//       },
-//     function(error, response, body){
-//       // console.log(error);
-//       // console.log(response);
-//       console.log(body);
-//       res.send(body);
-//     });
-//     // res.send("body");
-//   });
-// }
+async function ToShipping(request, result) {
+  axios({
+    method: 'post',
+    url: 'https://cse5234-payment-microservice.herokuapp.com/ShippingMicroservice/Shipping',
+    headers: { "Content-Type": "application/json" },
+    data: {
+      entity: "Garden",
+    }
+  })
+  .then(function (response) {
+    //handle success
+  })
+  .catch(function (response) {
+    //handle error
+    // console.log(response);
+  });
+}
 app
 .route("/OrderMicroservice/Order")
 .post(
@@ -256,7 +250,7 @@ app
     insertPlants(req, res);  
     updateInventory(req, res);
     ToPayment(req,res);
-    // ToShipping(req,res);
+    ToShipping(req,res);
   }
 )
 
