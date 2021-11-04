@@ -1,8 +1,8 @@
 const express = require("express");
 const http = require("https");
 const app = express();
-var request = require('request');
-
+const request = require('request');
+const axios = require('axios');
 const { Client } = require("pg");
 
 const port = process.env.PORT || 3002;
@@ -35,17 +35,11 @@ app.use(function(req, res, next) {
 });
 
 
-const ShippingQuery =
-  "INSERT INTO shippingInfo (id,address,city,state,zipcode,email,shipping_method1,shipping_method2,name)VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
-const PaymentQuery = "INSERT INTO paymentInfo (id,creditcardnumber,expirationdate,cvvcode)VALUES ($1, $2, $3, $4);";
-const OrderQuery = "INSERT INTO orders (id,shippingid,paymentid,order_date)VALUES ($1, $2, $3, $4)";
-const PlantsQuery = "INSERT INTO plant_orders(order_id,plant_id,quantity_purchased) VALUES($1, $2, $3)";
-
 async function insertShipping(request, response) {
   client.connect(); 
   let shipping = request.body.shipping;
   client.query(
-    'INSERT INTO shippinginfo (id,address,city,state,zipcode,email,shipping_method1,shipping_method2,name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);',
+    'INSERT INTO shippinginfo (id,address,city,state,zipcode,email,shipping_method1,name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);',
     [
       shipping.id,
       shipping.address,
@@ -54,7 +48,6 @@ async function insertShipping(request, response) {
       shipping.zipCode,
       shipping.email,
       shipping.shipping_method,
-      shipping.shipping_method2,
       shipping.name,
     ],
     (err, res) => {
@@ -196,10 +189,75 @@ async function updateInventory(request, result) {
       console.log(body);
       res.send(body);
     });
-    // res.send("body");
+    // result.send("body");
   });
 }
 
+
+async function ToPayment(request, res) {
+  // console.log("Got body:", request.body);
+  axios({
+    method: 'post',
+    url: 'https://cse5234-payment-microservice.herokuapp.com/PaymentMicroservice/Payment',
+    headers: { "Content-Type": "application/json" },
+    data: {
+      payment: request.body.payment,
+      entity: "Garden",
+      businessAccount: "01123456699549388345"
+    }
+  })
+  .then(function (response) {
+    //handle success
+    console.log(response);
+  })
+  .catch(function (response) {
+    //handle error
+    console.log(response);
+  });
+  // request.post(
+  //   {
+  //   url:'https://cse5234-payment-microservice.herokuapp.com/PaymentMicroservice/Payment',
+  //   json: {
+  //     payment: request.body.payment,
+  //     entity: "Garden",
+  //     businessAccount: "01123456"
+  //   },
+  //   headers: {
+  //       'Content-Type': 'application/json'
+  //   }
+  //   },
+  // function(error, response, body){
+  //   // console.log(error);
+  //   // console.log(response);
+  //   console.log(body);
+  //   res.send(body);
+  // });
+  // res.send("body");
+}
+
+// async function ToShipping(request, result) {
+//   console.log("Got body:", request.body);
+//   app.post('/ShippingMicroservice/Shipping', function(req, res){
+//     console.log(req.body);
+//     request.post(
+//       {
+//       url:'https://cse5234-payment-microservice.herokuapp.com/ShippingMicroservice/Shipping',
+//       json: {
+//         shipping: request.body.shipping, 
+//       },
+//       headers: {
+//           'Content-Type': 'application/json'
+//       }
+//       },
+//     function(error, response, body){
+//       // console.log(error);
+//       // console.log(response);
+//       console.log(body);
+//       res.send(body);
+//     });
+//     // res.send("body");
+//   });
+// }
 app
 .route("/OrderMicroservice/Order")
 .post(
@@ -211,6 +269,8 @@ app
     insertOrder(req, res);
     insertPlants(req, res);  
     updateInventory(req, res);
+    ToPayment(req,res);
+    // ToShipping(req,res);
   }
 )
 
