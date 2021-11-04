@@ -171,25 +171,21 @@ async function checkInventory(request, result) {
 
 async function updateInventory(request, result) {
   console.log("Got body:", request.body);
-  app.post('/', function(req, res){
-    console.log(req.body);
-    request.post(
-      {
-      url:'https://cse5234-inventory-microservice.herokuapp.com/InventoryMicroservice/Update',
-      json: {
-        products: request.body.product
-          },
-      headers: {
-          'Content-Type': 'application/json'
-      }
-      },
-    function(error, response, body){
-      // console.log(error);
-      // console.log(response);
-      console.log(body);
-      res.send(body);
-    });
-    // result.send("body");
+  axios({
+    method: 'post',
+    url: 'https://cse5234-inventory-microservice.herokuapp.com/InventoryMicroservice/Update',
+    headers: { "Content-Type": "application/json" },
+    data: {
+      products: request.body.product
+        }
+  })
+  .then(function (response) {
+    //handle success
+    console.log(response);
+  })
+  .catch(function (response) {
+    //handle error
+    console.log(response);
   });
 }
 
