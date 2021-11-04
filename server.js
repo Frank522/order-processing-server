@@ -206,7 +206,7 @@ async function ToPayment(request, res) {
     //handle success
     console.log("got payment response", response.data);
     client.query(
-      'INSERT INTO paymentinfo (comfirmation) VALUES ($1) WHERE id = ($2);',
+      'UPDATE paymentinfo (comfirmation) VALUES ($1) WHERE id = ($2);',
       [response.data.confirm, response.data.id],
       (err, res) => {
         if (err) throw err;
