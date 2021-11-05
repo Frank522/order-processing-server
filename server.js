@@ -234,6 +234,16 @@ async function ToShipping(request, result) {
   })
   .then(function (response) {
     //handle success
+    console.log("Response from shipping",response.data.msg);
+    client.query(
+      'UPDATE shippinginfo SET confirmation = ($1) WHERE id = ($2);',
+      [response.data.confirm, response.data.id],
+      (err, res) => {
+        if (err) throw err;
+        console.log(res);
+        //client.end();
+      }
+    );
   })
   .catch(function (response) {
     //handle error
