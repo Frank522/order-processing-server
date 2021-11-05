@@ -227,7 +227,9 @@ async function ToShipping(request, result) {
     url: 'https://cse5234-payment-microservice.herokuapp.com/ShippingMicroservice/Shipping',
     headers: { "Content-Type": "application/json" },
     data: {
+      shipping: request.body.shipping,
       entity: "Garden",
+      msg: "Garden initiate the Shipping Process"
     }
   })
   .then(function (response) {
