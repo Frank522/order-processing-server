@@ -224,7 +224,7 @@ async function ToPayment(request, res) {
 async function ToShipping(request, result) {
   axios({
     method: 'post',
-    url: 'https://cse5234-payment-microservice.herokuapp.com/ShippingMicroservice/Shipping',
+    url: 'https://cse5234-shipping-microservice.herokuapp.com/ShippingMicroservice/Shipping',
     headers: { "Content-Type": "application/json" },
     data: {
       shipping: request.body.shipping,
