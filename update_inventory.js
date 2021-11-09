@@ -16,14 +16,17 @@ client.query(
         'WHERE o.order_date > NOW() - INTERVAL \'24 HOURS\';',
         (err, res) => {
             if (err) throw err;
-            result.jsonp(res.rows);
+            for (let row of res.rows) {
+              console.log(JSON.stringify(row));
+            }
           });
+client.end();
 axios({
     method: 'post',
     url: 'https://cse5234-inventory-microservice.herokuapp.com/InventoryMicroservice/Update',
     headers: { "Content-Type": "application/json" },
     data: {
-            products: request.body.product
+            products: []
         }
 })
 .then(function (response) {
