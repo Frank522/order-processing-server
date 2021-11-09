@@ -12,8 +12,9 @@ client.connect();
 client.query(
         'SELECT plant_id, SUM(quantity_purchased)' + 
         'FROM plant_orders po' + 
-        'LEFT JOIN "orders" o ON po.order_id = o.id' +
-        'WHERE o.order_date > NOW() - INTERVAL \'24 HOURS\';',
+        'LEFT JOIN "orders" "o" ON po.order_id = o.id' +
+        'WHERE o.order_date > NOW() - INTERVAL \'24 HOURS\'' +
+        'GROUP BY plant_id;',
         (err, res) => {
             if (err) throw err;
             for (let row of res.rows) {
