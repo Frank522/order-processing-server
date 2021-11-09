@@ -20,7 +20,7 @@ client.query(
               console.log(JSON.stringify(row));
             }
           });
-client.end();
+
 axios({
     method: 'post',
     url: 'https://cse5234-inventory-microservice.herokuapp.com/InventoryMicroservice/Update',
