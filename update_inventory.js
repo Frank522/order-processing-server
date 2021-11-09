@@ -10,11 +10,20 @@ const client = new Client({
   });
 client.connect(); 
 let data = [];
+
+client.query(
+  'SELECT * from "orders"',
+  (err, res) => {
+    if (err) throw err;
+    for (let row of res.rows) {
+      console.log(row);
+    }
+  });
 client.query(
         'SELECT po.plant_id, SUM(po.quantity_purchased) ' + 
         'FROM plant_orders po ' + 
         'LEFT JOIN "orders" "o" ON po.order_id = o.id ' +
-        'WHERE TO_TIMESTAMP(o.order_date, \' D YYYY-MM-DD HH:MI:SS\') > NOW() - INTERVAL \'24 HOURS\' ' +
+        'WHERE TO_TIMESTAMP(o.order_date, \'D YYYY-MM-DD HH:MI:SS\') > NOW() - INTERVAL \'24 HOURS\' ' +
         'GROUP BY "po".plant_id;',
         (err, res) => {
             if (err) throw err;
