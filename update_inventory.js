@@ -14,7 +14,7 @@ client.query(
         'FROM plant_orders po' + 
         //'LEFT JOIN "orders" "o" ON po.order_id = o.id' +
         //'WHERE o.order_date > NOW() - INTERVAL \'24 HOURS\'' +
-        'GROUP BY po.plant_id;',
+        'GROUP BY "po".plant_id;',
         (err, res) => {
             if (err) throw err;
             for (let row of res.rows) {
