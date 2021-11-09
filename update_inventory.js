@@ -3,7 +3,7 @@ const { Client } = require("pg");
 const axios = require('axios');
 
 const client = new Client({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: 'postgres://lnhehewzhikycg:2aa42c3838714543fd7cb5b9814531d2d10216b4621c2b2240aae313f28f1827@ec2-44-195-240-222.compute-1.amazonaws.com:5432/d3rl0qvpau3ccf',//process.env.DATABASE_URL,
     ssl: {
       rejectUnauthorized: false,
     },
@@ -11,14 +11,14 @@ const client = new Client({
 client.connect(); 
 let data = [];
 
-client.query(
-  'SELECT * from "orders"',
-  (err, res) => {
-    if (err) throw err;
-    for (let row of res.rows) {
-      console.log(row);
-    }
-  });
+// client.query(
+//   'SELECT * from "orders"',
+//   (err, res) => {
+//     if (err) throw err;
+//     for (let row of res.rows) {
+//       console.log(row);
+//     }
+//   });
 client.query(
         'SELECT po.plant_id, SUM(po.quantity_purchased) ' + 
         'FROM plant_orders po ' + 
@@ -27,8 +27,10 @@ client.query(
         'GROUP BY "po".plant_id;',
         (err, res) => {
             if (err) throw err;
+            console.log("got", res.rowCount, "rows");
             for (let row of res.rows) {
               data.push({id: row.plant_id, quantity: row.sum});
+              console.log({id: row.plant_id, quantity: row.sum});
             }
             axios({
               method: 'post',
